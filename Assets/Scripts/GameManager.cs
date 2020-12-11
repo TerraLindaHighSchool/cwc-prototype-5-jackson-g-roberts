@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI scoreText, gameOverText;
 
+    public GameObject titleScreen;
+
     public Button restartButton;
 
     public bool isGameActive;
@@ -21,11 +23,7 @@ public class GameManager : MonoBehaviour
     
     void Start()
     {
-        isGameActive = true;
-        
-        StartCoroutine(SpawnTarget());
 
-        UpdateScore(0);
     }
 
     void Update()
@@ -48,6 +46,16 @@ public class GameManager : MonoBehaviour
     {
         score += scoreToAdd;
         scoreText.text = "Score: " + score;
+    }
+
+    public void StartGame(int difficulty)
+    {
+        spawnRate /= difficulty;
+        titleScreen.gameObject.SetActive(false);
+        isGameActive = true;
+        score = 0;
+        StartCoroutine(SpawnTarget());
+        UpdateScore(0);
     }
 
     public void GameOver()
